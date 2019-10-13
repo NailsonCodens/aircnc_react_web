@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
+
+import './style.css'
 
 export default function Dashboard() {
     const [spots, setSpots] = useState([]);
@@ -10,7 +13,6 @@ export default function Dashboard() {
             const response = await api.get('/dashboard', {
                 headers: { user_id }
             });
-
             setSpots(response.data)
         }
 
@@ -29,11 +31,15 @@ export default function Dashboard() {
                             {spot.company}
                         </strong>
                         <span>
-                            {spot.price}
+                            {spot.price ? `R$${spot.price}/dia` : 'Gratuíto' }
                         </span>
                     </li>
                 ))}
             </ul>
+
+            <Link to="/spot">
+                <button className="btn"> Cadastrar novo spot </button>
+            </Link>
         </>
     )  
 }
